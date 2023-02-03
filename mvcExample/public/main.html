@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+  <title>Calculator Example</title>
+</head>
+<body>
+    <div>
+      <h1>Calculator Example</h1>
+    </div>
+    
+    </body>
+    <script>
+        let num1=12;
+        let num2=14;
+        fetch(`http://localhost:3000/calculator/add?num1=${num1}&num2=${num2}`, { mode: 'no-cors'})
+        .then(response => response.json())
+        .then(data => {
+            console.log(response)
+            document.getElementById("result").innerHTML = data.result;            
+        })
+      </script>
+</html>

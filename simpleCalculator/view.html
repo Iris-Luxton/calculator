@@ -1,0 +1,78 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator Example</title>
+    <link rel="stylesheet" href="calc.css" />
+  </head>
+  <body>
+    <div>
+      <h1>Calculator Example</h1>
+    </div>
+    <input type="number" id="a" placeholder="First operand">
+    <input type="number" id="b" placeholder="Second operand">
+    <button id="add">+</button>
+    <button id="sub">-</button>
+    <button id="mul">*</button>
+    <button id="div">/</button>
+    <button id="clear">Clear</button>
+    <h3>The result is:</h3>
+    <p id="result"></p>
+    <!-- When a button is clicked, a corresponding AJAX request is sent to the server using the jQuery library. -->
+   
+      <!-- The difference between disabled and readonly is that the disabled element is not submitted along with the form data, 
+          while the readonly element is submitted along with the form data. -->
+      <br />
+    </div>
+  </body>
+  <!-- In this case, below tags are serving as routers -->
+  
+  <script>
+    const displayResult = result => {
+        document.querySelector("#result").textContent = result;
+      };
+
+      const sendRequest = (url, data) => {
+        return fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+          .then(res => res.json())
+          .then(({ result }) => displayResult(result));
+      };
+
+      document.querySelector("#add").addEventListener("click", () => {
+        const a = document.querySelector("#a").value;
+        const b = document.querySelector("#b").value;
+        sendRequest("/calculator/add", { a, b });
+      });
+
+      document.querySelector("#sub").addEventListener("click", () => {
+        const a = document.querySelector("#a").value;
+        const b = document.querySelector("#b").value;
+        sendRequest("/calculator/sub", { a, b });
+      });
+
+      document.querySelector("#mul").addEventListener("click", () => {
+        const a = document.querySelector("#a").value;
+        const b = document.querySelector("#b").value;
+        sendRequest("/calculator/mul", { a, b });
+      });
+
+      document.querySelector("#div").addEventListener("click", () => {
+        const a = document.querySelector("#a").value;
+        const b = document.querySelector("#b").value;
+        sendRequest("/calculator/div", { a, b });
+      });
+
+      document.querySelector("#clear").addEventListener("click", () => {
+        document.querySelector("#a").value = "";
+        document.querySelector("#b").value = "";
+        displayResult("");
+      });
+  </script>
+</html>
